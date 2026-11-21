@@ -54,10 +54,29 @@ Confusion matrix (rows: actual class; columns: predicted class):
 
 ## Application Features
 
-- **Dashboard**: customer counts, churn rate, contracts, and payment methods.
-- **Individual prediction**: enter a customer's details to estimate their churn risk.
-- **Batch prediction**: upload a CSV, add churn probabilities, and download the results.
-- **Model performance**: metrics, confusion matrix, and ROC curve.
+- **Landing page**: concise overview of the solution, key model results, and shortcuts to the main workflows.
+- **Dashboard**: customer counts, churn rate, contracts, payment methods, and tenure analysis.
+- **Individual prediction**: enter a customer's details and receive a probability, decision, and risk level.
+- **Batch prediction**: upload a CSV, identify at-risk customers, filter the results, and download an enriched file.
+- **Model performance**: accuracy, precision, recall, F1-score, ROC-AUC, confusion matrix, and ROC curve.
+
+## Application Interface
+
+The Streamlit interface is designed as a professional telecommunications analytics platform:
+
+- Orange, charcoal, and teal palette inspired by telecom operators.
+- Responsive layout for desktop, tablet, and mobile screens.
+- Structured navigation with Material icons and sentence-case labels.
+- Card-based KPIs and charts with consistent spacing and contrast.
+- Centralized theme configuration in `.streamlit/config.toml`.
+
+The application contains five sections:
+
+1. **Accueil**: project presentation and quick access to the main functions.
+2. **Dashboard**: descriptive analysis of customer churn.
+3. **Prédiction individuelle**: probability estimation for one customer.
+4. **Prédiction en masse**: CSV-based predictions and export.
+5. **Performance du modèle**: test-set evaluation and diagnostic charts.
 
 ## Project Structure
 
@@ -67,6 +86,8 @@ Project files, excluding virtual environments and tool-generated internal files:
 IBM/
 ├── .gitignore
 ├── README.md
+├── .streamlit/
+│   └── config.toml
 ├── app/
 │   └── streamlit_app.py
 ├── data/
@@ -155,10 +176,16 @@ The `requirements.txt` file lists the dependencies for the Streamlit application
 streamlit run app/streamlit_app.py
 ```
 
-The application is usually available at:
+The application is normally available at:
 
 ```text
 http://localhost:8501
+```
+
+If port `8501` is already in use, Streamlit may select another port or you can specify one explicitly:
+
+```powershell
+streamlit run app/streamlit_app.py --server.port 8502
 ```
 
 ### Run the notebooks

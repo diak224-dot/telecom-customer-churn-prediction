@@ -24,7 +24,7 @@ from sklearn.metrics import (
 
 st.set_page_config(
     page_title="Telecom Churn Prediction",
-    page_icon="📊",
+    page_icon=":material/analytics:",
     layout="wide",
     initial_sidebar_state="expanded",
 )
@@ -62,9 +62,9 @@ FEATURE_COLUMNS = [
 ]
 
 # Palette
-NAVY = "#0F2540"
-BLUE = "#1F6FEB"
-TEAL = "#14B8A6"
+NAVY = "#1B1B1F"
+BLUE = "#FF7900"
+TEAL = "#00A5A8"
 RED = "#E5484D"
 ORANGE = "#F59E0B"
 GREEN = "#22A06B"
@@ -84,112 +84,154 @@ def inject_css() -> None:
         footer {{visibility: hidden;}}
 
         .block-container {{
-            padding-top: 1.6rem;
-            padding-bottom: 3rem;
-            max-width: 1400px;
+            padding-top: 1rem;
+            padding-bottom: 2.5rem;
+            max-width: 1320px;
         }}
 
-        /* Bandeau d'en-tête */
-        .app-header {{
-            background: linear-gradient(120deg, {NAVY} 0%, #1B3F73 60%, {BLUE} 100%);
-            padding: 1.6rem 2rem;
-            border-radius: 16px;
-            color: #fff;
-            margin-bottom: 1.4rem;
-            box-shadow: 0 6px 18px rgba(15, 37, 64, 0.18);
-        }}
-        .app-header h1 {{
-            color: #fff;
-            font-size: 1.8rem;
-            margin: 0 0 .25rem 0;
-            padding: 0;
-        }}
-        .app-header p {{
-            color: #CBD7EA;
-            margin: 0;
-            font-size: .95rem;
+        @media (max-width: 640px) {{
+            .block-container {{
+                padding-left: .65rem;
+                padding-right: .65rem;
+                padding-top: .55rem;
+                padding-bottom: 1.5rem;
+            }}
+
+            h1 {{
+                font-size: 1.65rem !important;
+                line-height: 1.18;
+            }}
+
+            h2 {{
+                font-size: 1.25rem !important;
+            }}
+
+            h3 {{
+                font-size: 1.05rem !important;
+            }}
+
+            [data-testid="stMetric"] {{
+                padding: .8rem .85rem;
+                min-height: 96px;
+            }}
+
+            [data-testid="stMetricValue"] {{
+                font-size: 1.45rem;
+            }}
+
+            div[data-testid="stForm"] {{
+                padding: .85rem;
+            }}
+
+            [data-testid="stPlotlyChart"] {{
+                padding: .15rem;
+                overflow-x: auto;
+            }}
+
+            [data-testid="stDataFrame"] {{
+                font-size: .82rem;
+            }}
+
+            .stButton > button,
+            .stDownloadButton > button,
+            div[data-testid="stFormSubmitButton"] > button {{
+                min-height: 42px;
+                font-size: .9rem;
+            }}
+
+            .section-title {{
+                font-size: 1rem;
+                margin-top: .9rem;
+            }}
+
+            .risk-card {{
+                padding: .85rem;
+            }}
         }}
 
-        /* Titres de section */
+        [data-testid="stHeader"] {{
+            background: transparent;
+        }}
+
+        h1 {{
+            letter-spacing: -0.035em;
+            font-weight: 700;
+        }}
+
+        h2, h3 {{
+            letter-spacing: -0.02em;
+        }}
+
         .section-title {{
             font-size: 1.15rem;
             font-weight: 700;
             color: {NAVY};
             margin: 1.2rem 0 .6rem 0;
-            padding-left: .7rem;
-            border-left: 4px solid {BLUE};
+            padding-bottom: .45rem;
+            border-bottom: 1px solid #DCE4EF;
         }}
 
-        /* Cartes KPI */
         div[data-testid="stMetric"] {{
             background: #fff;
             border: 1px solid #E3E8F0;
-            border-radius: 14px;
+            border-radius: 12px;
             padding: 1rem 1.2rem;
-            box-shadow: 0 2px 8px rgba(15, 37, 64, 0.05);
+            box-shadow: 0 4px 14px rgba(15, 37, 64, 0.055);
         }}
         div[data-testid="stMetricLabel"] p {{
             color: {GREY};
             font-weight: 600;
             font-size: .85rem;
-            text-transform: uppercase;
-            letter-spacing: .03em;
+            letter-spacing: .015em;
         }}
         div[data-testid="stMetricValue"] {{
             color: {NAVY};
             font-weight: 700;
         }}
 
-        /* Conteneurs de graphiques */
         div[data-testid="stPlotlyChart"] {{
             background: #fff;
             border: 1px solid #E3E8F0;
-            border-radius: 14px;
-            padding: .5rem;
+            border-radius: 12px;
+            padding: .35rem;
             box-shadow: 0 2px 8px rgba(15, 37, 64, 0.04);
         }}
 
-        /* Formulaire */
         div[data-testid="stForm"] {{
             background: #fff;
             border: 1px solid #E3E8F0;
-            border-radius: 14px;
-            padding: 1.4rem;
+            border-radius: 12px;
+            padding: 1.2rem 1.3rem;
         }}
 
-        /* Boutons */
         .stButton > button, .stDownloadButton > button,
         div[data-testid="stFormSubmitButton"] > button {{
-            background: {BLUE};
-            color: #fff;
-            border: none;
-            border-radius: 10px;
+            border-radius: 8px;
             font-weight: 600;
-            padding: .6rem 1rem;
-            transition: all .15s ease;
-        }}
-        .stButton > button:hover, .stDownloadButton > button:hover,
-        div[data-testid="stFormSubmitButton"] > button:hover {{
-            background: {NAVY};
-            color: #fff;
-            transform: translateY(-1px);
+            min-height: 44px;
         }}
 
-        /* Sidebar */
-        section[data-testid="stSidebar"] {{
-            background: {NAVY};
-        }}
-        section[data-testid="stSidebar"] * {{
-            color: #E6EDF8 !important;
-        }}
-        section[data-testid="stSidebar"] hr {{
-            border-color: rgba(255,255,255,.15);
+        [data-testid="stSidebar"] {{
+            border-right: 1px solid #DCE4EF;
         }}
 
-        /* Badges de risque */
+        [data-testid="stSidebar"] [role="radiogroup"] {{
+            gap: .25rem;
+        }}
+
+        [data-testid="stSidebar"] [role="radio"] {{
+            border-radius: 8px;
+            padding: .42rem .55rem;
+        }}
+
+        [data-testid="stSidebar"] [role="radio"][aria-checked="true"] {{
+            background: rgba(255, 121, 0, .16);
+            border-left: 3px solid {BLUE};
+        }}
+
         .risk-card {{
-            border-radius: 14px;
-            padding: 1.1rem 1.3rem;
+            border-radius: 12px;
+            padding: 1rem 1.2rem;
             margin: .6rem 0 1rem 0;
             border: 1px solid;
         }}
@@ -231,16 +273,7 @@ def style_fig(fig: go.Figure, height: int = 380) -> go.Figure:
 
 
 def render_header() -> None:
-    st.markdown(
-        """
-        <div class="app-header">
-            <h1>Telecom Customer Churn Prediction</h1>
-            <p>Plateforme de Business Intelligence et de Machine Learning
-            pour l'analyse et la prédiction de la résiliation des clients.</p>
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
+    st.caption("Churn Intelligence • Business Intelligence & Machine Learning")
 
 
 def risk_banner(level: str, title: str, text: str) -> None:
@@ -350,18 +383,19 @@ YES_INDEX = list(model.classes_).index("Yes")
 # NAVIGATION
 # =========================================================
 
-st.sidebar.markdown("## 📊 Telecom Churn")
-st.sidebar.caption("Plateforme d'analyse et de prédiction")
-st.sidebar.divider()
+st.sidebar.markdown("### :material/analytics: Churn Intelligence")
+st.sidebar.caption("Plateforme de prédiction")
 
 page = st.sidebar.radio(
     "Navigation",
     [
-        "🏠 Dashboard",
-        "🔎 Prédiction individuelle",
-        "📂 Prédiction en masse",
-        "🤖 Performance du modèle",
+        "Accueil",
+        "Dashboard",
+        "Prédiction individuelle",
+        "Prédiction en masse",
+        "Performance du modèle",
     ],
+    key="main_navigation",
     label_visibility="collapsed",
 )
 
@@ -375,11 +409,97 @@ render_header()
 
 
 # =========================================================
-# PAGE 1 - DASHBOARD
+# PAGE 1 - ACCUEIL
 # =========================================================
 
-if page == "🏠 Dashboard":
-    st.header("Dashboard — Vue générale")
+if page == "Accueil":
+    st.title(
+        "Anticipez les départs avant qu'ils deviennent irréversibles",
+        icon=":material/trending_up:",
+    )
+    st.write(
+        "Une plateforme de décision pour identifier les clients à risque, "
+        "prioriser les actions de fidélisation et mesurer la performance "
+        "du modèle."
+    )
+
+    hero_left, hero_right = st.columns([1.55, 1], vertical_alignment="center")
+    with hero_left:
+        with st.container(horizontal=True):
+            st.button(
+                "Analyser le portefeuille",
+                icon=":material/dashboard:",
+                type="primary",
+                width="stretch",
+                key="landing_dashboard",
+                on_click=lambda: st.session_state.update(
+                    main_navigation="Dashboard"
+                ),
+            )
+            st.button(
+                "Évaluer un client",
+                icon=":material/person_search:",
+                width="stretch",
+                key="landing_prediction",
+                on_click=lambda: st.session_state.update(
+                    main_navigation="Prédiction individuelle"
+                ),
+            )
+        st.caption(
+            "Modèle Gradient Boosting • 19 variables • seuil de risque à 35 %"
+        )
+
+    with hero_right:
+        st.metric(
+            "Taux de résiliation observé",
+            f"{(df['Churn'] == 'Yes').mean():.2%}",
+            border=True,
+            height="stretch",
+        )
+
+    st.subheader("Une solution complète")
+    feature_grid = st.grid(3, row_height=190, gap="medium")
+    with feature_grid.cell():
+        with st.container(border=True, height="stretch"):
+            st.markdown("### :material/analytics: Vue décisionnelle")
+            st.write(
+                "Suivez la clientèle, les contrats, les paiements "
+                "et les facteurs associés au départ."
+            )
+    with feature_grid.cell():
+        with st.container(border=True, height="stretch"):
+            st.markdown("### :material/person_search: Prédiction ciblée")
+            st.write(
+                "Estimez le risque pour un client à partir de son profil "
+                "et obtenez une recommandation immédiate."
+            )
+    with feature_grid.cell():
+        with st.container(border=True, height="stretch"):
+            st.markdown("### :material/table_rows: Analyse à l'échelle")
+            st.write(
+                "Chargez un fichier CSV, classez les clients par niveau "
+                "de risque et exportez les résultats."
+            )
+
+    st.subheader("Résultats de référence")
+    metric_grid = st.columns(4, border=True)
+    metric_grid[0].metric("Clients", f"{len(df):,}", border=True)
+    metric_grid[1].metric("Accuracy", "78.42%", border=True)
+    metric_grid[2].metric("Recall", "70.86%", border=True)
+    metric_grid[3].metric("ROC-AUC", "84.62%", border=True)
+    st.caption(
+        "Résultats calculés sur 1 409 clients du jeu de test. "
+        "Les prédictions doivent soutenir, non remplacer, l'analyse humaine."
+    )
+
+
+# =========================================================
+# PAGE 2 - DASHBOARD
+# =========================================================
+
+elif page == "Dashboard":
+    st.title("Vue générale", icon=":material/dashboard:")
+    st.caption("Portefeuille clients, contrats et facteurs de résiliation")
 
     total_customers = len(df)
     churn_customers = int((df["Churn"] == "Yes").sum())
@@ -417,7 +537,7 @@ if page == "🏠 Dashboard":
             color_discrete_map={"No": TEAL, "Yes": RED},
         )
         fig_pie.update_traces(textinfo="percent+label", textfont_size=13)
-        st.plotly_chart(style_fig(fig_pie), use_container_width=True)
+        st.plotly_chart(style_fig(fig_pie), width="stretch")
 
     with right:
         contract_rate = (
@@ -438,7 +558,7 @@ if page == "🏠 Dashboard":
             color_discrete_sequence=[BLUE],
         )
         fig_contract.update_traces(marker_line_width=0, textposition="outside")
-        st.plotly_chart(style_fig(fig_contract), use_container_width=True)
+        st.plotly_chart(style_fig(fig_contract), width="stretch")
 
     section_title("Méthode de paiement et ancienneté")
     left2, right2 = st.columns(2)
@@ -463,7 +583,7 @@ if page == "🏠 Dashboard":
             color_discrete_sequence=[NAVY],
         )
         fig_payment.update_traces(marker_line_width=0, textposition="outside")
-        st.plotly_chart(style_fig(fig_payment), use_container_width=True)
+        st.plotly_chart(style_fig(fig_payment), width="stretch")
 
     with right2:
         tenure_df = df.copy()
@@ -497,7 +617,7 @@ if page == "🏠 Dashboard":
             color_discrete_sequence=[RED],
         )
         fig_tenure.update_traces(line=dict(width=3), marker=dict(size=9))
-        st.plotly_chart(style_fig(fig_tenure), use_container_width=True)
+        st.plotly_chart(style_fig(fig_tenure), width="stretch")
 
     st.markdown(
         f'<p class="note">Taux de fidélisation observé dans le dataset : '
@@ -508,15 +628,12 @@ if page == "🏠 Dashboard":
 
 
 # =========================================================
-# PAGE 2 - PREDICTION INDIVIDUELLE
+# PAGE 3 - PREDICTION INDIVIDUELLE
 # =========================================================
 
-elif page == "🔎 Prédiction individuelle":
-    st.header("Prédiction individuelle")
-    st.write(
-        "Renseigne les caractéristiques d'un client pour estimer "
-        "sa probabilité de résiliation."
-    )
+elif page == "Prédiction individuelle":
+    st.title("Prédiction individuelle", icon=":material/person_search:")
+    st.caption("Évaluez le risque de résiliation d’un client")
 
     with st.form("customer_form"):
         st.markdown("##### Profil et abonnement du client")
@@ -579,7 +696,7 @@ elif page == "🔎 Prédiction individuelle":
 
         submitted = st.form_submit_button(
             "Prédire le risque de résiliation",
-            use_container_width=True,
+            width="stretch",
         )
 
     if submitted:
@@ -619,7 +736,7 @@ elif page == "🔎 Prédiction individuelle":
 
         with gauge_col:
             st.plotly_chart(
-                probability_gauge(probability), use_container_width=True
+                probability_gauge(probability), width="stretch"
             )
 
         with result_col:
@@ -651,16 +768,12 @@ elif page == "🔎 Prédiction individuelle":
 
 
 # =========================================================
-# PAGE 3 - PREDICTION EN MASSE
+# PAGE 4 - PREDICTION EN MASSE
 # =========================================================
 
-elif page == "📂 Prédiction en masse":
-    st.header("Prédiction en masse")
-    st.write(
-        "Importe un fichier CSV contenant les informations de plusieurs "
-        "clients. Le fichier doit inclure les 19 variables utilisées "
-        "pendant l'entraînement."
-    )
+elif page == "Prédiction en masse":
+    st.title("Prédiction en masse", icon=":material/upload_file:")
+    st.caption("Analysez plusieurs clients à partir d’un fichier CSV")
 
     st.info(
         "La colonne Churn n'est pas nécessaire. Les colonnes supplémentaires "
@@ -759,7 +872,7 @@ elif page == "📂 Prédiction en masse":
                     )
                     fig_risk.update_layout(showlegend=False)
                     st.plotly_chart(
-                        style_fig(fig_risk, 320), use_container_width=True
+                        style_fig(fig_risk, 320), width="stretch"
                     )
                 with chart_right:
                     fig_hist = px.histogram(
@@ -777,7 +890,7 @@ elif page == "📂 Prédiction en masse":
                         annotation_text="Seuil",
                     )
                     st.plotly_chart(
-                        style_fig(fig_hist, 320), use_container_width=True
+                        style_fig(fig_hist, 320), width="stretch"
                     )
 
                 section_title("Résultats des prédictions")
@@ -791,7 +904,7 @@ elif page == "📂 Prédiction en masse":
                 ].sort_values("Churn_Probability", ascending=False)
                 st.dataframe(
                     filtered_df,
-                    use_container_width=True,
+                    width="stretch",
                     hide_index=True,
                     column_config={
                         "Churn_Probability": st.column_config.ProgressColumn(
@@ -810,11 +923,12 @@ elif page == "📂 Prédiction en masse":
 
                 csv_output = results_df.to_csv(index=False).encode("utf-8-sig")
                 st.download_button(
-                    label="📥 Télécharger les résultats CSV",
+                    label="Télécharger les résultats",
+                    icon=":material/download:",
                     data=csv_output,
                     file_name="telecom_churn_predictions.csv",
                     mime="text/csv",
-                    use_container_width=True,
+                    width="stretch",
                 )
 
         except Exception as error:
@@ -822,15 +936,12 @@ elif page == "📂 Prédiction en masse":
 
 
 # =========================================================
-# PAGE 4 - PERFORMANCE DU MODELE
+# PAGE 5 - PERFORMANCE DU MODELE
 # =========================================================
 
-elif page == "🤖 Performance du modèle":
-    st.header("Performance du modèle")
-    st.write(
-        "Évaluation du pipeline Gradient Boosting sur le jeu de test "
-        "exporté depuis le notebook."
-    )
+elif page == "Performance du modèle":
+    st.title("Performance du modèle", icon=":material/model_training:")
+    st.caption("Évaluation du Gradient Boosting sur le jeu de test")
 
     if not TEST_X_PATH.exists() or not TEST_Y_PATH.exists():
         st.warning(
@@ -911,7 +1022,7 @@ elif page == "🤖 Performance du modèle":
             )
             fig_cm.update_traces(textfont_size=18)
             fig_cm.update_coloraxes(showscale=False)
-            st.plotly_chart(style_fig(fig_cm, 420), use_container_width=True)
+            st.plotly_chart(style_fig(fig_cm, 420), width="stretch")
 
         with roc_col:
             fpr, tpr, _ = roc_curve(
@@ -943,7 +1054,7 @@ elif page == "🤖 Performance du modèle":
                 xaxis_title="Taux de faux positifs",
                 yaxis_title="Taux de vrais positifs",
             )
-            st.plotly_chart(style_fig(fig_roc, 420), use_container_width=True)
+            st.plotly_chart(style_fig(fig_roc, 420), width="stretch")
 
         st.info(
             "Note méthodologique : ce jeu de test a déjà été consulté lors "
