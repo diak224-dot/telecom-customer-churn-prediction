@@ -1065,3 +1065,14 @@ elif page == "Performance du modèle":
 
     except Exception as error:
         st.error(f"Erreur pendant l'évaluation du modèle : {error}")
+
+
+# =========================================================
+# COPYRIGHT
+# =========================================================
+
+st.divider()
+st.caption(
+    "© 2026 Telecom Churn Intelligence • Développé par diak224-dot",
+    text_alignment="center",
+)

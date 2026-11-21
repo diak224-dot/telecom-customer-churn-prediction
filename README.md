@@ -236,3 +236,11 @@ The main pipeline performs the following steps:
 6. Classifies customers using a 35% decision threshold.
 
 The final model is saved at `models/churn_model.pkl`. The test data used by the application is available in `data/processed/X_test.csv` and `data/processed/y_test.csv`.
+
+## Copyright
+
+© 2026 Telecom Churn Intelligence. Tous droits réservés.
+
+## Auteur
+
+Développé et maintenu par **diak224-dot**.
